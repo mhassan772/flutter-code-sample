@@ -7,12 +7,17 @@ showDialog(
           content: new Text("Alert Dialog body"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
+                new FlatButton(
+            child: new Text('CANCEL'),
+            onPressed: () => Navigator.of(context).pop()
+          ),
+          new FlatButton(
+            child: new Text('MARK AS DONE'),
+            onPressed: () {
+              _removeTodoItem(index);
+              Navigator.of(context).pop();
+            }
+          )
           ],
         );
       },
