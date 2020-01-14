@@ -42,6 +42,36 @@ class TodoListState extends State<TodoList> {
       _todoItems.add(taskClass);
     });
   }
+  void _removeTodoItem(ToDo task){
+    setState(() {_todoItems.remove(task);});
+  }
+
+  void _promptRemoveTodoItem(ToDo task){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Deleting Todo"),
+          content: new Text('Are you sure you want to delete "${task.text}" '),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+                child: new Text('CANCEL'),
+                onPressed: () => Navigator.of(context).pop()
+            ),
+            new FlatButton(
+                child: new Text('DELETE'),
+                onPressed: () {
+                  _removeTodoItem(task);
+                  Navigator.of(context).pop();
+                }
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget _buildTodoList() {
     return ListView.builder(
@@ -64,7 +94,7 @@ class TodoListState extends State<TodoList> {
       ),new SizedBox(width: 10),new Text(newTodo.text), Expanded(child: SizedBox()),
     IconButton(
     icon: Icon(Icons.delete, size: 30.0),
-    onPressed: (){setState(() {_todoItems.remove(newTodo);});}
+    onPressed: (){_promptRemoveTodoItem(newTodo);}
     )
       ]
       );
@@ -75,7 +105,7 @@ class TodoListState extends State<TodoList> {
       ),new SizedBox(width: 10),new Text(newTodo.text), Expanded(child: SizedBox()),
         IconButton(
           icon: Icon(Icons.delete, size: 30.0),
-          onPressed: (){setState(() {_todoItems.remove(newTodo);});}
+            onPressed: (){_promptRemoveTodoItem(newTodo);}
       )
       ]
       );
